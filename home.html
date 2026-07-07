@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Movie Downloader BOT</title>
+
+<style>
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:Arial,sans-serif;
+}
+
+body{
+  background:#111;
+  color:#fff;
+}
+.header{
+    background:#1b1b1b;
+    padding:15px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+.header h2{
+    margin:0;
+    font-size:22px;
+    color:#fff;
+}
+
+.profile-icon{
+    width:35px;
+    height:35px;
+    border-radius:50%;
+    cursor:pointer;
+    border:2px solid #00b894;
+}
+
+.profile-icon:hover{
+    transform:scale(1.05);
+}
+
+.topbar{
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+  padding:15px;
+}
+
+.topbar input{
+  width:100%;
+  padding:12px;
+}
+
+.topbar button{
+  width:50%;
+  padding:12px;
+  background:#00b894;
+  color:white;
+  border:none;
+  border-radius:8px;
+  display:block;
+  margin:0 auto;
+}
+
+
+.section-title{
+  margin:20px 15px 10px;
+  font-size:22px;
+  font-weight:bold;
+}
+
+.banner-ad{
+  margin:0 15px 20px;
+  height:90px;
+  border-radius:10px;
+  background:#2b2b2b;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  color:#aaa;
+  font-size:18px;
+  border:1px solid #444;
+}
+.movies{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:10px;
+  padding:15px;
+}
+.card{
+  background:#222;
+  border-radius:10px;
+  overflow:hidden;
+}
+
+.card img{
+  width:100%;
+  height:200px;
+  object-fit:cover;
+}
+
+.title{
+  padding:10px;
+  text-align:center;
+  font-size:15px;
+}
+
+.pagination{
+  display:flex;
+  justify-content:center;
+  gap:8px;
+  padding:20px;
+  flex-wrap:wrap;
+}
+
+.pagination button{
+  width:42px;
+  height:42px;
+  border:none;
+  border-radius:8px;
+  background:#333;
+  color:#fff;
+  cursor:pointer;
+}
+
+.pagination button:hover{
+  background:#00b894;
+}
+</style>
+</head>
+
+
+<body>
+<div class="header">
+    <h2>Movie Downloader BOT</h2>
+
+    <img src="https://www.gstatic.com/images/branding/product/1x/avatar_circle_blue_512dp.png"
+         class="profile-icon"
+         onclick="openAdmin()">
+</div>
+  
+<div class="topbar">
+  <input type="text" placeholder="🔍 Search Movie...">
+<button id="btn">Continue</button></div>
+
+<a href="https://omg10.com/4/9471332" target="_blank">
+<img src="https://i.ibb.co/k2W24g71/IMG-20260707-110414.png"
+    style="
+      width:100%;
+      max-width:350px;
+      height:160px;
+      display:block;
+      margin:auto;
+      border-radius:6px;
+      object-fit:cover;
+    ">
+</a>
+    
+<h2 class="section-title">Related Videos</h2>
+<div class="movies" id="movies"></div>
+<div class="pagination" id="pagination"></div>
+
+</div>
+<script>
+
+const movies=[];
+for(let i=1;i<=10;i++){
+  movies.push({
+    title:"Movie "+i,
+    image:"https://via.placeholder.com/300x450?text=Movie+"+i
+  });
+}
+
+const perPage=10;
+let page=1;
+
+function loadMovies(){
+
+const start=(page-1)*perPage;
+const end=start+perPage;
+
+let html="";
+
+movies.slice(start,end).forEach(movie=>{
+
+html+=`
+<div class="card">
+<img src="${movie.image}">
+<div class="title">${movie.title}</div>
+</div>
+`;
+
+});
+
+document.getElementById("movies").innerHTML=html;
+
+let total=Math.ceil(movies.length/perPage);
+
+let p="";
+
+for(let i=1;i<=total;i++){
+p+=`<button onclick="go(${i})">${i}</button>`;
+}
+
+document.getElementById("pagination").innerHTML=p;
+
+}
+
+function go(n){
+page=n;
+loadMovies();
+window.scrollTo(0,0);
+}
+
+loadMovies();
+const ADMIN_ID = 123456789;
+
+const userId = window.Telegram?.WebApp?.initDataUnsafe?.user?.id;
+
+
+function openAdmin(){
+    window.location.href = "admin.html";
+}
+
+const btn = document.getElementById("btn");
+
+const pages = [
+  "https://google.com",
+  "https://facebook.com",
+  "https://tikto.com"
+];
+
+const botLink = "http://t.me/Kandahubs18Bot?start=iRjfw1k8";
+
+const randomPage = pages[Math.floor(Math.random() * pages.length)];
+
+if (localStorage.getItem("step") === "done") {
+  btn.innerText = "Get File";
+}
+
+btn.onclick = function () {
+
+  if (localStorage.getItem("step") === "done") {
+    localStorage.removeItem("step");
+    window.location.href = botLink;
+  } else {
+    localStorage.setItem("step", "done");
+    window.location.href = randomPage;
+  }
+
+};
+
+
+</script>
+
+</body>
+</html>
